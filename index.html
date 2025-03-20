@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monetag Ad Reward System</title>
+    <script src='//whephiwums.com/sdk.js' data-zone='9111756' data-sdk='show_9111756'></script>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: white;
+            margin-top: 50px;
+        }
+        .container {
+            background: #1f1f1f;
+            padding: 20px;
+            border-radius: 10px;
+            width: 300px;
+            margin: auto;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            background: green;
+            color: white;
+        }
+        button:hover {
+            background: darkorange;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Monetag Ads Reward</h2>
+        <p>Watched Ads: <span id="watched-ads">0</span></p>
+        <p>Earned Points: <span id="earned-points">0.00</span></p>
+        
+        <button onclick="watchInterstitialAd()">Watch Interstitial Ad</button>
+        <button onclick="watchRewardedPopupAd()">Watch Rewarded Popup Ad</button>
+        <button onclick="watchRewardedInterstitial()">Watch Rewarded Interstitial</button>
+    </div>
+    
+    <script>
+        let watchedAdsCount = 0;
+        let earnedPoints = 0.00;
+
+        function updateUI() {
+            document.getElementById("watched-ads").textContent = watchedAdsCount;
+            document.getElementById("earned-points").textContent = earnedPoints.toFixed(2);
+            localStorage.setItem('watchedAdsCount', watchedAdsCount);
+            localStorage.setItem('earnedPoints', earnedPoints.toFixed(2));
+        }
+
+        function watchInterstitialAd() {
+            show_9111756().then(() => {
+                watchedAdsCount++;
+                earnedPoints += 0.50;
+                updateUI();
+            }).catch(e => {
+                console.log("Interstitial Ad failed", e);
+            });
+        }
+
+        function watchRewardedPopupAd() {
+            show_9111756('pop').then(() => {
+                watchedAdsCount++;
+                earnedPoints += 1.00;
+                updateUI();
+            }).catch(e => {
+                console.log("Rewarded Popup Ad failed", e);
+            });
+        }
+
+        function watchRewardedInterstitial() {
+            show_9111756().then(() => {
+                watchedAdsCount++;
+                earnedPoints += 1.50;
+                updateUI();
+            }).catch(e => {
+                console.log("Rewarded Interstitial Ad failed", e);
+            });
+        }
+    </script>
+</body>
+</html>
